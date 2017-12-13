@@ -4,11 +4,11 @@ layout: default
 <title>主页</title>
 </head>
 <body>
-<div style="color: #8A2BE2;text-align: center;font-size: 80px;text-shadow: 5px 5px 5px 5px #66CCFF;font-family: "华文行楷";">欢迎来到我的主页</div>
+<div style="color: #8A2BE2;text-align: center;font-size: 80px;text-shadow: 5px 5px 5px 5px #66CCFF;font-family: Microsoft YaHei;">欢迎来到我的主页</div>
 <div style="float: left;display: -webkit-flex;display: flex;background-color: #7FFF00;-webkit-flex-direction: column;flex-direction: column;border-radius: 25px;">
-	<div style="color: #FF7F00;text-align: center;font-size: 40px;font-style: "华文行楷";">这是我的文章列表</div>
+	<div style="color: #FF7F00;text-align: center;font-size: 40px;font-family: FangSong">这是我的文章列表</div>
 	{% for post in site.posts %}
-	<div><a href="{{ site.baseurl }}{{ post.url }}">{{ post.site }}</a></div>
+	<div><a href="{{ site.baseurl }}{{ post.url }}" style="font-size: 30px;font-family: KaiTi">■{{ post.title }}</a></div>
 	{% endfor %}
 </div>
 </body>
