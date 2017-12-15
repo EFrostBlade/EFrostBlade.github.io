@@ -27,11 +27,26 @@
 			alert("不是数字");
 		}
 	}
+	function logIn() {
+		var x=document.getElementById("pswd").value
+		if(x=="123456")
+		{
+			alert("密码正确\n登录成功");
+			window.open("http://mjrky.cn");
+		}
+		else
+		{
+			alert("密码错误\n登录失败");
+		}
+	}
 </script>
 <button type="button" onclick="ChangeText()">点击这里以改变上面文字的内容</button>
 <button type="button" onclick="ChangeColor()">点击这里以改变上面文字的颜色</button>
 <p>请输入数字。如果输入的不是数字，会弹出提示。</p>
 <input type="text" id="number">
 <button type="button" onclick="Number()">点击这里判断输入的是否为数字</button>
+<p>请输入123456以登录</p>
+<input type="text" id="pswd">
+<button type="button" onclick="logIn()">登录</button>
 </body>
 </html>
