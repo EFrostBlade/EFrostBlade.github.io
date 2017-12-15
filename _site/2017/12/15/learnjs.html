@@ -16,7 +16,12 @@
 		x=document.getElementById("text");
 		x.innerHTML="哈哈，这里的文字被改变了";
 	}
+	function ChangeColor() {
+		x=document.getElementById("text")
+		x.style.color="#66CCFF";
+	}
 </script>
-<button type="button" onclick="ChangeText()">点击这里以改变上面的文字</button>
+<button type="button" onclick="ChangeText()">点击这里以改变上面文字的内容</button>
+<button type="button" onclick="ChangeColor()">点击这里以改变上面文字的颜色</button>
 </body>
 </html>
