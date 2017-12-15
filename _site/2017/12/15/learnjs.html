@@ -10,5 +10,13 @@
 	document.write(d);
 </script>
 <button type="button" onclick="alert('欢迎')">点我弹出欢迎</button>
+<p>这里的文字将会被改变</p>
+<script type="text/javascript">
+	function ChangeText() {
+		x=document.getElementById("text");
+		x.innerHTML="哈哈，这里的文字被改变了";
+	}
+</script>
+<button type="button" onclick="ChangeText()">点击这里以改变上面的文字</button>
 </body>
 </html>
