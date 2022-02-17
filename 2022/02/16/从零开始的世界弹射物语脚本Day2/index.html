@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>从零开始的世界弹射物语脚本Day2 | Frost</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言出于本人是只懒狗，而飞天前段时间寄了，只能自力更生给自己玩的游戏搞自动化。初步考虑基于Auto.js制作一个简单的世界弹射物语游戏的自动化脚本，能满足日常蝗虫游玩需要。本文所有代码及资源均同步至github的项目页面。">
+  <meta name="description" content="前言出于本人是只懒狗，而飞天前段时间寄了，只能自力更生给自己玩的游戏搞自动化。初步考虑基于Auto.js制作一个简单的世界弹射物语游戏的自动化脚本，能满足日常蝗虫游玩需要。本文所有代码及资源均同步至github的项目页面。交流群775892832。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从零开始的世界弹射物语脚本Day2">
 <meta property="og:url" content="http://example.com/2022/02/16/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E4%B8%96%E7%95%8C%E5%BC%B9%E5%B0%84%E7%89%A9%E8%AF%AD%E8%84%9A%E6%9C%ACDay2/index.html">
 <meta property="og:site_name" content="Frost">
-<meta property="og:description" content="前言出于本人是只懒狗，而飞天前段时间寄了，只能自力更生给自己玩的游戏搞自动化。初步考虑基于Auto.js制作一个简单的世界弹射物语游戏的自动化脚本，能满足日常蝗虫游玩需要。本文所有代码及资源均同步至github的项目页面。">
+<meta property="og:description" content="前言出于本人是只懒狗，而飞天前段时间寄了，只能自力更生给自己玩的游戏搞自动化。初步考虑基于Auto.js制作一个简单的世界弹射物语游戏的自动化脚本，能满足日常蝗虫游玩需要。本文所有代码及资源均同步至github的项目页面。交流群775892832。">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/2022/02/16/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E4%B8%96%E7%95%8C%E5%BC%B9%E5%B0%84%E7%89%A9%E8%AF%AD%E8%84%9A%E6%9C%ACDay2/%E5%A4%8D%E9%80%89%E4%B8%8B%E6%8B%89.gif">
 <meta property="og:image" content="http://example.com/2022/02/16/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E4%B8%96%E7%95%8C%E5%BC%B9%E5%B0%84%E7%89%A9%E8%AF%AD%E8%84%9A%E6%9C%ACDay2/%E7%B4%A0%E6%9D%90.gif">
 <meta property="og:image" content="http://example.com/2022/02/16/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E4%B8%96%E7%95%8C%E5%BC%B9%E5%B0%84%E7%89%A9%E8%AF%AD%E8%84%9A%E6%9C%ACDay2/%E9%80%9A%E4%BF%A1.gif">
 <meta property="article:published_time" content="2022-02-16T08:12:03.000Z">
-<meta property="article:modified_time" content="2022-02-16T08:53:31.893Z">
+<meta property="article:modified_time" content="2022-02-17T05:19:54.612Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="脚本">
 <meta property="article:tag" content="世界弹射物语">
@@ -162,7 +162,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>出于本人是只懒狗，而飞天前段时间寄了，只能自力更生给自己玩的游戏搞自动化。初步考虑基于<a target="_blank" rel="noopener" href="https://hyb1996.github.io/AutoJs-Docs">Auto.js</a>制作一个<del>简单的</del>世界弹射物语游戏的自动化脚本，能满足日常<del>蝗虫</del>游玩需要。<br>本文所有代码及资源均同步至github的<a target="_blank" rel="noopener" href="https://github.com/EFrostBlade/autoFlipper">项目页面</a>。</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>出于本人是只懒狗，而飞天前段时间寄了，只能自力更生给自己玩的游戏搞自动化。初步考虑基于<a target="_blank" rel="noopener" href="https://hyb1996.github.io/AutoJs-Docs">Auto.js</a>制作一个<del>简单的</del>世界弹射物语游戏的自动化脚本，能满足日常<del>蝗虫</del>游玩需要。<br>本文所有代码及资源均同步至github的<a target="_blank" rel="noopener" href="https://github.com/EFrostBlade/autoFlipper">项目页面</a>。交流群775892832。</p>
 <span id="more"></span>
 <h1 id="ui制作"><a href="#ui制作" class="headerlink" title="ui制作"></a>ui制作</h1><p>今天制作一个简单的ui来控制脚本的各项功能，在Auto.Js中，ui界面要在文件开头通过<code>&quot;ui&quot;;</code>来声明。由于需要进行多种功能的执行，考虑采用复选框和下拉框进行功能的选择，一个复选框和下拉框的示例如下</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;horizontal&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">checkbox</span> <span class="attr">id</span>=<span class="string">&quot;素材1&quot;</span> <span class="attr">text</span>=<span class="string">&quot;  &quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">checkbox</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">spinner</span> <span class="attr">id</span>=<span class="string">&quot;素材属性1&quot;</span> <span class="attr">entries</span>=<span class="string">&quot;火|水|雷|风|光|暗|mana&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">spinner</span>&gt;</span></span><span class="comment">//下拉菜单选择</span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">spinner</span> <span class="attr">id</span>=<span class="string">&quot;素材等级1&quot;</span> <span class="attr">entries</span>=<span class="string">&quot;Lv10|Lv20|Lv30|Lv40|Lv50&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">spinner</span>&gt;</span></span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">input</span> <span class="attr">inputType</span>=<span class="string">&quot;number&quot;</span> <span class="attr">id</span>=<span class="string">&quot;素材次数1&quot;</span> <span class="attr">text</span>=<span class="string">&quot;5&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span><span class="comment">//输入次数</span></span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">text</span> <span class="attr">text</span>=<span class="string">&quot;次&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">text</span>&gt;</span></span></span><br><span class="line">&lt;/horizontal&gt;</span><br></pre></td></tr></table></figure>
@@ -287,6 +287,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2022/02/17/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E4%B8%96%E7%95%8C%E5%BC%B9%E5%B0%84%E7%89%A9%E8%AF%AD%E8%84%9A%E6%9C%ACDay3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          从零开始的世界弹射物语脚本Day3
+        
+      </div>
+    </a>
   
   
     <a href="/2022/02/14/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84%E4%B8%96%E7%95%8C%E5%BC%B9%E5%B0%84%E7%89%A9%E8%AF%AD%E8%84%9A%E6%9C%ACDay1/" id="article-nav-older" class="article-nav-link-wrap">
