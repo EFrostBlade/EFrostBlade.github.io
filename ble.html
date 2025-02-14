@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>EMS BLE Test</title>
+</head>
+
+<body>
+    <button id="connectBtn">连接BLE设备</button>
+    <button onclick="sendChannelControl(0x01, 0x01, 50, 0x01, 0, 0)">打开A通道示例</button>
+    <pre id="logArea"></pre>
+
+    <script>
+        let websocket = null;
+
+        function connectWebSocket(url, onMessageCallback) {
+            websocket = new WebSocket(url);
+
+            websocket.onopen = () => {
+                console.log("WebSocket 连接已打开");
+            };
+
+            websocket.onmessage = (event) => {
+                if (onMessageCallback) {
+                    onMessageCallback(event.data);
+                }
+            };
+
+            websocket.onclose = () => {
+                console.log("WebSocket 连接已关闭");
+            };
+
+            websocket.onerror = (error) => {
+                console.error("WebSocket 错误:", error);
+            };
+        }
+
+        function sendWebSocketMessage(message) {
+            if (websocket && websocket.readyState === WebSocket.OPEN) {
+                websocket.send(message);
+            } else {
+                console.log("WebSocket 连接未打开，无法发送消息:", message);
+            }
+        }
+
+        let writeCharacteristic = null;
+
+        // 连接 WebSocket
+        connectWebSocket('ws://127.0.0.1:17938', (message) => {
+            console.log('收到 WebSocket 消息:', message);
+        });
+
+        document.getElementById('connectBtn').addEventListener('click', async () => {
+            try {
+                const device = await navigator.bluetooth.requestDevice({
+                    filters: [{ services: ['0000ff30-0000-1000-8000-00805f9b34fb'] }]
+                });
+                const server = await device.gatt.connect();
+                const service = await server.getPrimaryService('0000ff30-0000-1000-8000-00805f9b34fb');
+                // 获取可写特征
+                writeCharacteristic = await service.getCharacteristic('0000ff31-0000-1000-8000-00805f9b34fb');
+                // 订阅通知
+                const notifyCharacteristic = await service.getCharacteristic('0000ff32-0000-1000-8000-00805f9b34fb');
+                await notifyCharacteristic.startNotifications();
+                notifyCharacteristic.addEventListener('characteristicvaluechanged', onNotify);
+                log('已连接并开始监听FF32特征');
+            } catch (error) {
+                log('连接失败: ' + error);
+            }
+        });
+
+        function onNotify(event) {
+            const value = event.target.value;
+            const data = new Uint8Array(value.buffer);
+            log('收到通知: ' + Array.from(data).map(b => b.toString(16).padStart(2, '0')).join(' '));
+
+            // 发送数据到 WebSocket
+            sendWebSocketMessage(Array.from(data).join(','));
+
+            parseResponse(data);
+        }
+
+        function parseResponse(data) {
+            if (data[0] === 0x35 && data[1] === 0x71) {
+                let type = data[2];
+                switch (type) {
+                    case 0x01: { // 通道A状态
+                        let connectState = data[3];
+                        let onOff = data[4];
+                        let intensity = (data[5] << 8) + data[6];
+                        let mode = data[7];
+                        log('通道A状态 => 连接:' + connectState + ', 开关:' + onOff + ', 强度:' + intensity + ', 模式:' + mode);
+                        break;
+                    }
+                    case 0x02: { // 通道B状态
+                        let connectState = data[3];
+                        let onOff = data[4];
+                        let intensity = (data[5] << 8) + data[6];
+                        let mode = data[7];
+                        log('通道B状态 => 连接:' + connectState + ', 开关:' + onOff + ', 强度:' + intensity + ', 模式:' + mode);
+                        break;
+                    }
+                    case 0x03: { // 马达状态
+                        let state = data[3];
+                        log('马达状态 => ' + state);
+                        break;
+                    }
+                    case 0x04: { // 电池电量
+                        let battery = data[3];
+                        log('电池电量 => ' + battery + '%');
+                        break;
+                    }
+                    case 0x05: { // 计步数据
+                        let steps = (data[3] << 8) + data[4];
+                        log('计步数据 => ' + steps);
+                        break;
+                    }
+                    case 0x06: { // 角度数据
+                        // 仅简单输出
+                        log('角度数据 => ' + Array.from(data).map(b => b.toString(16)).join(' '));
+                        break;
+                    }
+                    case 0x55: { // 异常上报
+                        let errorCode = data[3];
+                        log('异常上报 => 代码:' + errorCode);
+                        break;
+                    }
+                    default:
+                        log('未知类型:' + type);
+                }
+            }
+        }
+
+        function sendChannelControl(channel, onOff, intensity, mode, freq, pulseTime) {
+            if (!writeCharacteristic) {
+                log('尚未连接设备');
+                return;
+            }
+            // 构建10字节的数据包: [0x35, 0x11, channel, onOff, intensity高字节, intensity低字节, mode, freq, pulseTime, checksum]
+            const data = new Uint8Array(10);
+            data[0] = 0x35; // 包头
+            data[1] = 0x11; // 命令字
+            data[2] = channel & 0xff;
+            data[3] = onOff & 0xff;
+            data[4] = (intensity >> 8) & 0xff;
+            data[5] = intensity & 0xff;
+            data[6] = mode & 0xff;
+            data[7] = freq & 0xff;
+            data[8] = pulseTime & 0xff;
+            data[9] = calcChecksum(data);
+
+            writeCharacteristic.writeValueWithoutResponse(data).then(() => {
+                log('已下发通道指令');
+            }).catch(e => {
+                log('指令下发失败: ' + e);
+            });
+        }
+
+        function calcChecksum(buffer) {
+            let sum = 0;
+            for (let i = 0; i < buffer.length - 1; i++) {
+                sum += buffer[i];
+            }
+            return sum & 0xff;
+        }
+
+        function log(msg) {
+            const area = document.getElementById('logArea');
+            area.textContent += msg + '\n';
+        }
+    </script>
+</body>
+
+</html>
